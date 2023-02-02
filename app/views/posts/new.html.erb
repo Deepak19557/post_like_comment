@@ -1,0 +1,7 @@
+<%= form_for [@post] do |f| %>
+  <%= f.text_field :post_name, placeholder: "What do you want to say?" %><br><br>
+
+  <%= f.file_field :images, placeholder: "upload image", multiple: true %>
+
+  <%= f.submit "Post" %>
+<% end %>
