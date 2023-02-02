@@ -15,22 +15,23 @@
                   <% post.images.each do |post_image|%>
                     <%= image_tag post_image, class:"post_image" %>
                   <%end%>
-                  <% lik = current_user.likes.find_by(likeable: post) %>
+                  <% lik = current_user.likes.find_by(likeable_id: post.id) %>
                   <% if lik.present? %>
-                    <p><%= button_to 'unlike', post_like_delete_path(post) %></p>
+                    <p><%= button_to "unlike #{post.likes.count}", post_like_delete_path(post) %></p>
                   <% else %>
-                    <p><%= button_to 'like', post_like_path(post) %></p>
+                  <% li =  User.includes(:likes).count%>
+                    <p><%= button_to "like #{post.likes.count}", post_like_path(post)  %></p>
                   <% end %>
                 </td>
                 <td><%= link_to 'add comments' , new_comment_path(post) %></td>
                 <td>
                   <% post.comments.each do |comment| %>
                     <ul><li><%= comment.comment_name %></li></ul>
-                    <% lik = current_user.likes.find_by(likeable: comment) %>
+                    <% lik = current_user.likes.find_by(likeable_id: comment.id) %>
                     <% if lik.present? %>
-                      <p><%= button_to 'unlike', comment_like_delete_path(comment) %></p>
+                      <p><%= button_to "unlike #{comment.likes.count}", comment_like_delete_path(comment) %></p>
                     <% else %>
-                      <p><%= button_to 'like', comment_like_path(comment) %></p>
+                      <p><%= button_to "like #{comment.likes.count}", comment_like_path(comment) %></p>
                     <%end%>
                   <%end%>
                 </td>
